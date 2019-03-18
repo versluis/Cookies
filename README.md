@@ -2,7 +2,7 @@
 
 WordPress Plugin to that lists all cookies used on your site.
 
-![]/images/screenshot.png
+![](/images/screenshot.png)
 
 ### Usage
 
