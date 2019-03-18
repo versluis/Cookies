@@ -1,12 +1,14 @@
 # Cookies
 
-List all cookies used on your site (WordPress plugin)
+WordPress Plugin to that lists all cookies used on your site.
 
 ### Usage
 
-Add the shortcode [cookies] in any post or page to display a list of all current site cookies for your visitors. 
-Once activated, there's a small options page under Appearance - Cookies with a preview, which is only visible to site admins.
-You also have the option to exclude WordPress cookies, which filters anything containting the string "wordpress" or "wp" in the cookie title. 
+Add the shortcode [cookies] in any post or page to display a list of all current site cookies for your visitors.
+
+Once activated, there's a small options page under **Appearance - Cookies** with a preview, which is only visible to site admins.
+
+You also have the option to exclude WordPress cookies, which filters anything containting the string "wordpress" or "wp" in the cookie title. Use the shortcode [cookies-nowp] to display the filtered list.
 
 ### Attributions
 - This plugin is based on code by [David Artiss](https://artiss.blog/2012/05/wordpress-function-to-list-site-cookies/?fbclid=IwAR37lyleRF791Fh2hj0cBuhyS51sbm3xqcz_NsHYb_qfiFoRXAfcFqT9pqI). 
