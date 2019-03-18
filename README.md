@@ -2,6 +2,8 @@
 
 WordPress Plugin to that lists all cookies used on your site.
 
+![]/images/screenshot.png
+
 ### Usage
 
 Add the shortcode **[cookies]** in any post or page to display a list of all current site cookies for your visitors.
