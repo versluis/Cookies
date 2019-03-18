@@ -64,7 +64,9 @@ function guru_cookies () {
 	?>
     <hr>
     <p>To display this list to your visitors, use the shortcode <strong>[cookies]</strong> in your post or page.</p>
-    <p>You can filter out all WordPress related cookies using the shortcode <strong>[cookies-no-wp]</strong>.</p>
+    <p>You can filter out all WordPress related cookies using the shortcode <strong>[cookies-nowp]</strong>.</p>
+    <p>Find out more about Cookies on <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">Wikipedia</a>.</p> 
+    <hr>
     
     <?php
     // ***************
@@ -110,7 +112,7 @@ function guru_cookies () {
 // ********************************
 // Additional and Helper Functions
 // ********************************
-function guru_get_cookies( $paras = '', $content = '' ) {
+function guru_get_nowp_cookies( $paras = '', $content = '' ) {
 	
 	$novalue = false;
 	if ( !empty( $paras[0] ) ) {	
@@ -144,6 +146,38 @@ function guru_get_cookies( $paras = '', $content = '' ) {
 } 
 // adding the above function to WordPress
 // https://codex.wordpress.org/Function_Reference/add_shortcode
+add_shortcode( 'cookies-nowp', 'guru_get_nowp_cookies' );
+
+// same as above, but listing all cookies
+function guru_get_cookies( $paras = '', $content = '' ) {
+	
+	$novalue = false;
+	if ( !empty( $paras[0] ) ) {	
+	  if ( strtolower( $paras[ 0 ] ) == 'novalue' ) {
+		  $novalue = true;
+	  } 
+	}
+	
+	if ( $content == '' ) {
+		$seperator = ' : ';
+	} else {
+		$seperator = $content;
+	}
+	$cookie = $_COOKIE;
+	ksort( $cookie );
+	$content = "<ul>";
+	foreach ( $cookie as $key => $val ) {
+		
+		// list all cookies
+		$content .= '<li><b>' . $key . '</b>';
+		if ( !$novalue ) {
+			$content .= $seperator . $val; 
+		}
+		$content .= "</li>"; 
+	} 
+	$content .= "</ul>"; 
+	return do_shortcode( $content ); 
+} 
 add_shortcode( 'cookies', 'guru_get_cookies' );
 
 // helper function to determine if a phrase is in another string
