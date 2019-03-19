@@ -4,11 +4,11 @@ WordPress Plugin to that lists all cookies used on your site.
 
 ![](/images/admin-screenshot.png)
 
-*View Cookies in the Admin Area
+*View Cookies in the Admin Area*
 
 ![](/images/2013-screenshot.png)
 
-*Show cookies to your visitors (optional)
+*Show cookies to your visitors (optional)*
 
 ### Usage
 
