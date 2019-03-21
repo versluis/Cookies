@@ -31,7 +31,7 @@
 // https://codex.wordpress.org/Function_Reference/add_theme_page
 function guru_cookies_menu() {
 	// add_theme_page('My Plugin Theme', 'My Plugin', 'edit_theme_options', 'my-unique-identifier', 'my_plugin_function');
-	add_theme_page('Cookies', 'Cookies', 'edit_theme_options', 'gcookies', 'guru_cookies');
+	add_theme_page('Show Me The Cookies', 'Cookies', 'edit_theme_options', 'gcookies', 'guru_cookies');
 }
 add_action('admin_menu', 'guru_cookies_menu');
 
@@ -54,17 +54,17 @@ function guru_cookies () {
 	?>
     <div class="wrap">
     <div id="icon-index" class="icon32"><br></div>
-    <h2>Cookies</h2>
-    <p>Here's a list of all cookies used on your site.</p>
+    <h2>Show Me The Cookies</h2>
+    <p>Here's a list of all current cookies used on your site.</p>
     <hr>
 	<?php
 	// call cookies function here
-	// guru_get_cookies($paras = '', $content = '');
 	echo guru_admin_cookies();
 	?>
     <hr>
     <p>To display this list to your visitors, use the shortcode <strong>[cookies]</strong> in your post or page.</p>
     <p>You can filter out all WordPress related cookies using the shortcode <strong>[cookies-nowp]</strong>.</p>
+    <p>If you like, you can replace the default separator between the cookie and its value by placing your own string inside the opening and closing tags.<br>For example <strong>[cookies] ==> [/cookies]</strong> or <strong>[cookies-nowp] contains [/cookies-nowp]</strong> respectively.
     <p>Find out more about Cookies on <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">Wikipedia</a>.</p> 
     <hr>
     
@@ -76,7 +76,7 @@ function guru_cookies () {
 	<p><a href="https://wpguru.co.uk" target="_blank"><img src="<?php  
 	echo plugins_url('images/guru-header-2013.png', __FILE__); ?>" width="300"></a> </p>
 
-<p><a href="https://wpguru.co.uk/" target="_blank">Plugin by Jay Versluis</a> | <a href="https://github.com/versluis/Cookies" target="_blank">Contribute on GitHub</a> | <a href="https://patreon.com/versluis" target="_blank">Support me on Patreon</a></p>
+<p><a href="https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/" target="_blank">Plugin by Jay Versluis</a> | <a href="https://github.com/versluis/Cookies" target="_blank">Contribute on GitHub</a> | <a href="https://patreon.com/versluis" target="_blank">Support me on Patreon</a></p>
 
 <p><span><!-- Social Buttons -->
 
