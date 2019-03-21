@@ -4,7 +4,7 @@
  * Plugin Name: Cookies
  * Plugin URI: https://wpguru.tv
  * Description: Displays a list of all cookies used on your site
- * Version: 0.1
+ * Version: 0.2
  * Author: Jay Versluis
  * Author URI: https://wpguru.tv
  * License: GPL2
