@@ -64,7 +64,7 @@ function guru_cookies () {
     <hr>
     <p>To display this list to your visitors, use the shortcode <strong>[cookies]</strong> in your post or page.</p>
     <p>You can filter out all WordPress related cookies using the shortcode <strong>[cookies-nowp]</strong>.</p>
-    <p>If you like, you can replace the default separator between the cookie and its value by placing your own string inside the opening and closing tags.<br>For example <strong>[cookies] ==> [/cookies]</strong> or <strong>[cookies-nowp] contains [/cookies-nowp]</strong> respectively.
+    <p>If you like, you can replace the default separator between the cookie and its value <br>by placing your own string inside the opening and closing tags.<br>For example <strong>[cookies] ==> [/cookies]</strong>.
     <p>Find out more about Cookies on <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">Wikipedia</a>.</p> 
     <hr>
     
