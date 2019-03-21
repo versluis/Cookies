@@ -76,7 +76,7 @@ function guru_cookies () {
 	<p><a href="https://wpguru.co.uk" target="_blank"><img src="<?php  
 	echo plugins_url('images/guru-header-2013.png', __FILE__); ?>" width="300"></a> </p>
 
-<p><a href="https://wpguru.co.uk/2014/03/introducing-child-theme-wizard-for-wordpress/" target="_blank">Plugin by Jay Versluis</a> | <a href="https://github.com/versluis/Child-Theme-Wizard" target="_blank">Fork me or Contribute on GitHub</a> | <a href="https://patreon.com/versluis" target="_blank">Support me on Patreon</a></p>
+<p><a href="https://wpguru.co.uk/" target="_blank">Plugin by Jay Versluis</a> | <a href="https://github.com/versluis/Cookies" target="_blank">Contribute on GitHub</a> | <a href="https://patreon.com/versluis" target="_blank">Support me on Patreon</a></p>
 
 <p><span><!-- Social Buttons -->
 
@@ -165,17 +165,17 @@ function guru_get_cookies( $paras = '', $content = '' ) {
 	}
 	$cookie = $_COOKIE;
 	ksort( $cookie );
-	$content = "<ul>";
+	$content = "<ol>";
 	foreach ( $cookie as $key => $val ) {
 		
 		// list all cookies
-		$content .= '<li><b>' . $key . '</b>';
+		$content .= '<li><b> ' . $key . '</b>';
 		if ( !$novalue ) {
 			$content .= $seperator . $val; 
 		}
 		$content .= "</li>"; 
 	} 
-	$content .= "</ul>"; 
+	$content .= "</ol>"; 
 	return do_shortcode( $content ); 
 } 
 add_shortcode( 'cookies', 'guru_get_cookies' );
@@ -197,16 +197,16 @@ function guru_admin_cookies () {
 	
 	$cookie = $_COOKIE;
 	ksort( $cookie );
-	$content = "<ul>";
+	$content = "<ol>";
 	
 	foreach ( $cookie as $key => $val ) {
-		$content .= '<li><b>' . $key . '</b>';
+		$content .= '<li><b> ' . $key . '</b>';
 		if ( !$novalue ) {
 			$content .= $seperator . $val; 
 		}
 		$content .= "</li>"; 
 	} 
-	$content .= "</ul>";
+	$content .= "</ol>";
 	 
 	return $content;
 }
