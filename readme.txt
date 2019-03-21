@@ -5,6 +5,7 @@ Tags: cookie, cookies, gdpr, local storage
 Requires at least: 3.4
 Tested up to: 5.1
 Stable tag: 0.2
+Requires PHP: 5.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +23,7 @@ This plugin is based on code by David Artiss, who kindly made it available on Gi
 
 To find out more about what cookies are and what can be done with them, please read https://en.wikipedia.org/wiki/HTTP_cookie
 
+
 == Installation ==
 
 1. Either: Upload the entire folder `cookies` to the `/wp-content/plugins/` directory. 
@@ -29,6 +31,11 @@ To find out more about what cookies are and what can be done with them, please r
 1. Or: from Plugins - Add New, search for "show me the cookies", to find this plugin and hit "install"
 1. Then: Activate the plugin through the 'Plugins' menu in WordPress
 1. You can your cookies under Appearance - Cookies
+
+
+== Frequently Asked Questions ==
+
+None so far.
 
 
 == Screenshots ==
