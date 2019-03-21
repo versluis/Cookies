@@ -29,16 +29,16 @@
 
 // add submenu page under Appearance
 // https://codex.wordpress.org/Function_Reference/add_theme_page
-function guru_cookies_menu() {
+function smtc_cookies_menu() {
 	// add_theme_page('My Plugin Theme', 'My Plugin', 'edit_theme_options', 'my-unique-identifier', 'my_plugin_function');
-	add_theme_page('Show Me The Cookies', 'Cookies', 'edit_theme_options', 'gcookies', 'guru_cookies');
+	add_theme_page('Show Me The Cookies', 'Cookies', 'edit_theme_options', 'gcookies', 'smtc_guru_cookies');
 }
-add_action('admin_menu', 'guru_cookies_menu');
+add_action('admin_menu', 'smtc_cookies_menu');
 
 // *********************
 // Main Plugin Function
 // *********************
-function guru_cookies () {
+function smtc_guru_cookies () {
 	
 	// check that the user has the required capability 
     if (!current_user_can('manage_options'))
@@ -59,7 +59,7 @@ function guru_cookies () {
     <hr>
 	<?php
 	// call cookies function here
-	echo guru_admin_cookies();
+	echo smtc_guru_admin_cookies();
 	?>
     <hr>
     <p>To display this list to your visitors, use the shortcode <strong>[cookies]</strong> in your post or page.</p>
@@ -112,7 +112,7 @@ function guru_cookies () {
 // ********************************
 // Additional and Helper Functions
 // ********************************
-function guru_get_nowp_cookies( $paras = '', $content = '' ) {
+function smtc_guru_get_nowp_cookies( $paras = '', $content = '' ) {
 	
 	$novalue = false;
 	if ( !empty( $paras[0] ) ) {	
@@ -132,7 +132,7 @@ function guru_get_nowp_cookies( $paras = '', $content = '' ) {
 	foreach ( $cookie as $key => $val ) {
 		
 		// don't do this if key is 'wordpress' or 'wp'
-		if (!isThisInThat ('wordpress', $key) && !isThisInThat ('wp', $key)) {
+		if (!smtc_isThisInThat ('wordpress', $key) && !smtc_isThisInThat ('wp', $key)) {
 		$content .= '<li><b>' . $key . '</b>';
 		if ( !$novalue ) {
 			$content .= $seperator . $val; 
@@ -146,10 +146,10 @@ function guru_get_nowp_cookies( $paras = '', $content = '' ) {
 } 
 // adding the above function to WordPress
 // https://codex.wordpress.org/Function_Reference/add_shortcode
-add_shortcode( 'cookies-nowp', 'guru_get_nowp_cookies' );
+add_shortcode( 'cookies-nowp', 'smtc_guru_get_nowp_cookies' );
 
 // same as above, but listing all cookies
-function guru_get_cookies( $paras = '', $content = '' ) {
+function smtc_guru_get_cookies( $paras = '', $content = '' ) {
 	
 	$novalue = false;
 	if ( !empty( $paras[0] ) ) {	
@@ -178,16 +178,16 @@ function guru_get_cookies( $paras = '', $content = '' ) {
 	$content .= "</ol>"; 
 	return do_shortcode( $content ); 
 } 
-add_shortcode( 'cookies', 'guru_get_cookies' );
+add_shortcode( 'cookies', 'smtc_guru_get_cookies' );
 
 // helper function to determine if a phrase is in another string
 // https://stackoverflow.com/questions/4366730/how-do-i-check-if-a-string-contains-a-specific-word
-function isThisInThat ($needle, $haystack) {
+function smtc_isThisInThat ($needle, $haystack) {
 	return strpos($haystack, $needle) !==false;
 }
 
 // list cookies in admin interface
-function guru_admin_cookies () {
+function smtc_guru_admin_cookies () {
 	
 	if ( $content == '' ) {
 		$seperator = ' : ';
