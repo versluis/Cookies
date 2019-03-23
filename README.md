@@ -28,5 +28,5 @@ If you like, you can repalce the default separator (a colon) between the cookie 
 
 ### Further Reading
 
-Also available on the offical [WordPress Repository](https://wordpress.org/plugins/show-me-the-cookies/)
-Release Post for this project: https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/
+- Also available on the offical [WordPress Repository](https://wordpress.org/plugins/show-me-the-cookies/)
+- Release Post for this project on [my website](https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/)
