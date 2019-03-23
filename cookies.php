@@ -4,7 +4,7 @@
  * Plugin Name: Show Me The Cookies
  * Plugin URI: https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/
  * Description: Displays a list of all cookies used on your site
- * Version: 0.2
+ * Version: 1.0
  * Author: Jay Versluis
  * Author URI: https://wpguru.tv
  * License: GPL2
