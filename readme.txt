@@ -4,7 +4,7 @@ Donate link: https://patreon.com/versluis
 Tags: cookie, cookies, gdpr, privacy
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 1.1
+Stable tag: 1.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -45,6 +45,17 @@ None so far.
 
 
 == Changelog ==
+
+= 1.2 =
+* Security: added sensitive cookie denylist — hides WordPress auth, session, and token cookies from shortcode output
+* Security: cookie values are now masked in all output (first 3 + ••• + last 3 characters)
+* Security: shortcodes now hide values by default; opt in with show_values="true" to display masked values
+* Security: added admin notice warning that cookie values may contain sensitive session data
+* Removed: is_wp_cookie() replaced by the more robust is_sensitive_cookie() denylist method
+* Changed: [cookies] and [cookies-nowp] shortcode attribute novalue replaced by show_values="true"
+* Improved: admin cookie list shows all cookies (including WordPress ones) with masked values
+* Added: cookie value size (character count) displayed beneath each value in the admin list
+* Fixed: [cookies] shortcode now shows an informative message when no non-sensitive cookies are found
 
 = 1.1 =
 * Security: escaped all cookie name and value output to prevent XSS

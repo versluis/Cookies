@@ -3,13 +3,15 @@
  * Plugin Name: Show Me The Cookies
  * Plugin URI:  https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/
  * Description: Display a list of all cookies used on your site, or view them under Appearance - Cookies.
- * Version:     1.1
+ * Version:     1.2
  * Author:      Jay Versluis
  * Author URI:  https://wpguru.tv
  * License:     GPL2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: show-me-the-cookies
  */
+
+// v1.2 - Security hardening: sensitive cookie filtering, value masking, opt-in value display
 
 /*  Copyright 2019 Jay Versluis (email: support@wpguru.tv)
 
@@ -94,14 +96,19 @@ class Show_Me_The_Cookies {
 		<?php
 	}
 
-	// Shortcode: [cookies] — lists all cookies.
+	// Shortcode: [cookies] — lists all non-sensitive cookies.
+	// Pass show_values="true" to display masked cookie values.
 	// https://developer.wordpress.org/reference/functions/add_shortcode/
 	public function shortcode_all_cookies( $atts = [], string $content = '' ): string {
 		$atts       = is_array( $atts ) ? $atts : [];
 		$show_value = $this->should_show_value( $atts );
 
-		$cookies = $_COOKIE;
+		$cookies = array_filter( $_COOKIE, fn( $key ) => ! $this->is_sensitive_cookie( $key ), ARRAY_FILTER_USE_KEY );
 		ksort( $cookies );
+
+		if ( empty( $cookies ) ) {
+			return '<p>' . esc_html__( 'No non-WordPress cookies found.', 'show-me-the-cookies' ) . '</p>';
+		}
 
 		$count  = 1;
 		$output = $this->maybe_frontend_styles();
@@ -110,7 +117,7 @@ class Show_Me_The_Cookies {
 			$output .= '<li>';
 			$output .= '<strong>Cookie #' . $count . '</strong>: ' . esc_html( $key );
 			if ( $show_value ) {
-				$output .= '<br>Value: ' . esc_html( $val );
+				$output .= '<br>Value: ' . esc_html( $this->mask_cookie_value( $val ) );
 			}
 			$output .= '</li>';
 			$count++;
@@ -120,13 +127,13 @@ class Show_Me_The_Cookies {
 		return $output;
 	}
 
-	// Shortcode: [cookies-nowp] — same as above but skips WordPress core cookies.
+	// Shortcode: [cookies-nowp] — lists non-sensitive cookies only.
+	// Pass show_values="true" to display masked cookie values.
 	public function shortcode_nowp_cookies( $atts = [], string $content = '' ): string {
 		$atts       = is_array( $atts ) ? $atts : [];
 		$show_value = $this->should_show_value( $atts );
 
-		$cookies  = $_COOKIE;
-		$filtered = array_filter( $cookies, fn( $key ) => ! $this->is_wp_cookie( $key ), ARRAY_FILTER_USE_KEY );
+		$filtered = array_filter( $_COOKIE, fn( $key ) => ! $this->is_sensitive_cookie( $key ), ARRAY_FILTER_USE_KEY );
 		ksort( $filtered );
 
 		if ( empty( $filtered ) ) {
@@ -140,7 +147,7 @@ class Show_Me_The_Cookies {
 			$output .= '<li>';
 			$output .= '<strong>Cookie #' . $count . '</strong>: ' . esc_html( $key );
 			if ( $show_value ) {
-				$output .= '<br>Value: ' . esc_html( $val );
+				$output .= '<br>Value: ' . esc_html( $this->mask_cookie_value( $val ) );
 			}
 			$output .= '</li>';
 			$count++;
@@ -159,17 +166,19 @@ class Show_Me_The_Cookies {
 		return '<style>.smtc-cookie-list{list-style:none;padding-left:0}.smtc-cookie-list li{margin-bottom:1em}</style>';
 	}
 
-	// Builds the cookie list for the admin page. Always shows values; no separator option needed.
+	// Builds the cookie list for the admin page. Shows all cookies with masked values.
 	private function build_cookie_list(): string {
 		$cookies = $_COOKIE;
 		ksort( $cookies );
 
-		$count  = 1;
-		$output = '<ol class="smtc-cookie-list">';
+		$output  = '<div class="notice notice-warning"><p><strong>Note:</strong> Cookie values may contain sensitive session data. Treat them as passwords. Sensitive cookies (WordPress auth, session, and token cookies) are hidden from this list.</p></div>';
+		$count   = 1;
+		$output .= '<ol class="smtc-cookie-list">';
 		foreach ( $cookies as $key => $val ) {
 			$output .= '<li>';
 			$output .= '<strong>Cookie #' . $count . '</strong>: ' . esc_html( $key ) . '<br>';
-			$output .= 'Value: ' . esc_html( $val );
+			$output .= 'Value: ' . esc_html( $this->mask_cookie_value( $val ) ) . '<br>';
+			$output .= 'Size: ' . mb_strlen( $val ) . ' characters';
 			$output .= '</li>';
 			$count++;
 		}
@@ -178,15 +187,32 @@ class Show_Me_The_Cookies {
 		return $output;
 	}
 
-	// Returns false when the positional 'novalue' shortcode attribute is present.
-	// Usage: [cookies novalue] suppresses the cookie value in the output.
+	// Returns true only when show_values="true" is explicitly set in shortcode attributes.
 	private function should_show_value( array $atts ): bool {
-		return ! ( isset( $atts[0] ) && strtolower( $atts[0] ) === 'novalue' );
+		return isset( $atts['show_values'] ) && strtolower( $atts['show_values'] ) === 'true';
 	}
 
-	// A cookie name is considered a WordPress cookie if it contains 'wordpress' or 'wp'.
-	private function is_wp_cookie( string $name ): bool {
-		return str_contains( $name, 'wordpress' ) || str_contains( $name, 'wp' );
+	// Returns a masked version of a cookie value to avoid exposing sensitive session data.
+	private function mask_cookie_value( string $val ): string {
+		if ( $val === '' ) {
+			return '(empty)';
+		}
+		if ( mb_strlen( $val ) <= 4 ) {
+			return $val;
+		}
+		return mb_substr( $val, 0, 3 ) . '•••' . mb_substr( $val, -3 );
+	}
+
+	// Returns true if the cookie name matches known sensitive patterns (auth, session, token, WP core).
+	private function is_sensitive_cookie( string $name ): bool {
+		return stripos( $name, 'wordpress' ) !== false
+			|| stripos( $name, 'wp-' ) !== false
+			|| str_starts_with( strtolower( $name ), 'wp_' )
+			|| strcasecmp( $name, 'PHPSESSID' ) === 0
+			|| stripos( $name, 'token' ) !== false
+			|| stripos( $name, 'auth' ) !== false
+			|| stripos( $name, 'sess' ) !== false
+			|| stripos( $name, 'secret' ) !== false;
 	}
 }
 
