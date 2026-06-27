@@ -75,8 +75,7 @@ class Show_Me_The_Cookies {
 				<strong>[cookies]</strong>.
 			</p>
 			<p>
-				<?php esc_html_e( 'You can filter out all WordPress related cookies using', 'show-me-the-cookies' ); ?>
-				<strong>[cookies-nowp]</strong>.
+				<?php esc_html_e( 'WordPress related cookies are filtered out and will not be shown for security reasons.', 'show-me-the-cookies' ); ?>
 			</p>
 			<p>
 				<?php esc_html_e( 'Find out more about cookies on', 'show-me-the-cookies' ); ?>
