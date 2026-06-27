@@ -62,6 +62,7 @@ class Show_Me_The_Cookies {
 		<style>
 			.smtc-cookie-list { list-style: none; padding-left: 0; }
 			.smtc-cookie-list li { margin-bottom: 1em; }
+			.smtc-notice { background: rgba(219,166,23,0.12); border-left: 4px solid #dba617; padding: 8px 12px; margin: 1em 0; color: inherit; }
 		</style>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Show Me The Cookies', 'show-me-the-cookies' ); ?></h1>
@@ -89,7 +90,7 @@ class Show_Me_The_Cookies {
 			</p>
 			<p>
 				<a href="https://wpguru.co.uk/2019/03/show-me-the-cookies-how-to-list-all-cookies-on-your-wordpress-site/" target="_blank">Plugin by Jay Versluis</a>
-				| <a href="https://github.com/versluis/Cookies" target="_blank">Contribute on GitHub</a>
+				| <a href="https://github.com/versluis/Show-Me-The-Cookies" target="_blank">Contribute on GitHub</a>
 				| <a href="https://patreon.com/versluis" target="_blank">Support me on Patreon</a>
 			</p>
 		</div>
@@ -171,9 +172,8 @@ class Show_Me_The_Cookies {
 		$cookies = $_COOKIE;
 		ksort( $cookies );
 
-		$output  = '<div class="notice notice-warning"><p><strong>Note:</strong> Cookie values may contain sensitive session data. Treat them as passwords. Sensitive cookies (WordPress auth, session, and token cookies) are hidden from this list.</p></div>';
-		$count   = 1;
-		$output .= '<ol class="smtc-cookie-list">';
+		$count  = 1;
+		$output = '<ol class="smtc-cookie-list">';
 		foreach ( $cookies as $key => $val ) {
 			$output .= '<li>';
 			$output .= '<strong>Cookie #' . $count . '</strong>: ' . esc_html( $key ) . '<br>';
@@ -183,6 +183,7 @@ class Show_Me_The_Cookies {
 			$count++;
 		}
 		$output .= '</ol>';
+		$output .= '<div class="smtc-notice"><p><strong>Note:</strong> Cookie values may contain sensitive session data. Treat them as passwords. Sensitive cookies (WordPress auth, session, and token cookies) are hidden from this list.</p></div>';
 
 		return $output;
 	}
